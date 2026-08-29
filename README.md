@@ -1,4 +1,4 @@
-# Post Automation Engine
+# Ecommerce Post Automation Engine
 
 Extract product data from e-commerce product URLs (Daraz, Bikroy, or any page) into clean, structured posts — with a persistent post library, optional WordPress publishing, and a browsable web UI.
 
