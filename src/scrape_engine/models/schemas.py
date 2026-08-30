@@ -15,7 +15,7 @@ class ScrapeRequest(BaseModel):
     """
 
     url: HttpUrl
-    source: Literal["daraz", "bikroy", "generic"] | None = None
+    source: Literal["daraz", "bikroy", "generic", "facebook"] | None = None
     publish: bool = Field(default=False, description="If True, publish to WordPress after scraping.")
 
 
@@ -74,3 +74,34 @@ class ScrapeResponse(BaseModel):
     product: ProductData
     published: bool = False
     publish_detail: PublishResponse | None = None
+
+
+class FacebookLoginRequest(BaseModel):
+    """Kick off (or refresh) the interactive Facebook session login.
+
+    The backend opens a visible browser at Facebook's login page and waits for
+    the user to sign in, then stores the session cookies for reuse.
+    """
+
+    timeout: int = Field(
+        default=180,
+        description="Seconds to wait for the user to complete the login.",
+        ge=30,
+        le=600,
+    )
+
+
+class FacebookLoginResponse(BaseModel):
+    """Result of a Facebook session login attempt."""
+
+    logged_in: bool
+    message: str
+    cookies_saved: bool = False
+
+
+class FacebookStatusResponse(BaseModel):
+    """Whether a usable Facebook session exists."""
+
+    logged_in: bool
+    cookie_file: str | None = None
+    cookie_count: int = 0

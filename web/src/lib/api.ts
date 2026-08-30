@@ -91,6 +91,31 @@ export async function countPosts(): Promise<number> {
   return res.count
 }
 
+export interface FacebookLoginResponse {
+  logged_in: boolean
+  message: string
+  cookies_saved: boolean
+}
+
+export interface FacebookStatusResponse {
+  logged_in: boolean
+  cookie_file: string | null
+  cookie_count: number
+}
+
+/** Check whether a usable Facebook session exists. */
+export async function facebookStatus(): Promise<FacebookStatusResponse> {
+  return request<FacebookStatusResponse>('/scrape/facebook/status')
+}
+
+/** Kick off the interactive Facebook login (opens a browser, waits for user). */
+export async function facebookLogin(timeout?: number): Promise<FacebookLoginResponse> {
+  return request<FacebookLoginResponse>('/scrape/facebook/login', {
+    method: 'POST',
+    body: JSON.stringify({ timeout: timeout ?? 180 }),
+  })
+}
+
 /** Ping the backend health endpoint (true when reachable). */
 export async function isBackendHealthy(): Promise<boolean> {
   try {

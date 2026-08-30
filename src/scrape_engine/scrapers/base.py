@@ -139,6 +139,8 @@ class BaseScraper(ABC):
             return "daraz"
         if "bikroy" in host:
             return "bikroy"
+        if "facebook" in host or host.startswith("fb.") or "fbclid" in url:
+            return "facebook"
         # Generic fallback catches everything else.
         return "generic"
 
@@ -146,11 +148,13 @@ class BaseScraper(ABC):
     def get_scraper_class(name: str) -> Type["BaseScraper"]:
         from scrape_engine.scrapers.bikroy_scraper import BikroyScraper
         from scrape_engine.scrapers.daraz_scraper import DarazScraper
+        from scrape_engine.scrapers.facebook_scraper import FacebookScraper
         from scrape_engine.scrapers.generic_scraper import GenericScraper
 
         mapping: dict[str, Type[BaseScraper]] = {
             "daraz": DarazScraper,
             "bikroy": BikroyScraper,
+            "facebook": FacebookScraper,
             "generic": GenericScraper,
         }
         return mapping[name]

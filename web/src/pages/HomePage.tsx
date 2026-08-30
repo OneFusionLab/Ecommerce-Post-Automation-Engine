@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ContentPreview } from '@/components/content-preview'
+import { FacebookLoginCard } from '@/components/facebook-login-card'
 import { UrlForm } from '@/components/url-form'
 import { listPosts, scrape } from '@/lib/api'
 import type { Post, ProductData } from '@/lib/types'
@@ -59,6 +60,8 @@ export function HomePage({
       </div>
 
       <UrlForm loading={loading} onSubmit={handleSubmit} />
+
+      <FacebookLoginCard />
 
       {product && !loading && <ContentPreview product={product} />}
       {!product && !loading && (

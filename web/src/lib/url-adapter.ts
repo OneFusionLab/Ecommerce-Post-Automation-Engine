@@ -14,7 +14,7 @@
  * give instant client-side feedback before hitting the network.
  */
 
-export type ScrapeSource = 'daraz' | 'bikroy' | 'generic'
+export type ScrapeSource = 'daraz' | 'bikroy' | 'facebook' | 'generic'
 
 export interface NormalizedUrl {
   /** Fully-qualified, prepend-scheme URL (canonical form). */
@@ -49,6 +49,7 @@ export function detectSource(hostname: string): ScrapeSource {
   const host = hostname.toLowerCase()
   if (host.includes('daraz')) return 'daraz'
   if (host.includes('bikroy')) return 'bikroy'
+  if (host.includes('facebook')) return 'facebook'
   return 'generic'
 }
 
